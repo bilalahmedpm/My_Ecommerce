@@ -1,4 +1,5 @@
 <!-- Main Sidebar Container -->
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
@@ -16,7 +17,7 @@
                 <a href="#" class="d-block">{{auth::user()->name}}</a>
             </div>
         </div>
-
+        <?php $user = Auth::User(); ?>
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
@@ -58,12 +59,14 @@
                                 <p>Categories</p>
                             </a>
                         </li>
+                        @if($user->role == 1)
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Category Requests</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
 
@@ -82,12 +85,14 @@
                                 <p>Sub Categories</p>
                             </a>
                         </li>
+                        @if($user->role == 1)
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sub Category Requests</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
 

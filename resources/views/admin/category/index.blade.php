@@ -19,18 +19,31 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-<tbody>
-@foreach($category as $row)
-<tr>
-    <td>{{$row->id}}</td>
-    <td>{{$row->name}}</td>
-    <td>
-        <a href="{{route('category.edit' ,$row->id)}}" data-toggle="modal" data-target="#categoryedit{{$row->id}}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="edit">
-            <i class="fa fa-pen"></i> Edit
-        </a>
+                        <tbody>
+                        @foreach($category as $row)
+                        <tr>
+                            <td>{{$row->id}}</td>
+                            <td>{{$row->name}}</td>
+                            <td><img style="width:60px; height: 50px; border-radius:20px; " src="{{asset($row->img)}}"alt=""></td>
+                            <td>
+                                @if($row->status == 0)
+                                <span class="badge badge-success">Approved</span>
+                                @else
+                                    <span class="badge badge-success">Pending</span>
+                                @endif
+                            </td>
+                            <td>{{$row->user->name}}</td>
+                            <td>
+
+                            <a href="{{route('category.edit' ,$row->id)}}" data-toggle="modal" data-target="#categoryedit{{$row->id}}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="edit">
+                                <i class="fa fa-pen"></i> Edit
+                            </a>
         <!-- Modal -->
         <div class="modal fade" id="categoryedit{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -46,7 +59,6 @@
                         <form action="{{route('category.update',$row->id)}}" method="post" enctype="multipart/form-data" data-parsley-validate>
                             @method('PUT')
                             @csrf
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="title"><b>Category</b><span class="text-danger">*</span></label>
@@ -62,12 +74,9 @@
                         </form>
                     </div>
                 </div>
-
-
-
             </div>
 
-        </div></div>
+        </div>
 
      <a href="{{route('category.destroy' ,$row->id)}}" id="delete" class="btn btn-sm btn-danger" data-toggle="tooltip" title="edit">
             <i class="fa fa-times"></i> Delete
@@ -101,7 +110,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
+                <!-- Add New Category Modal -->
                 <div class="modal-body">
                     <form action="{{route('category.store')}}" method="post" enctype="multipart/form-data" data-parsley-validate>
                         @csrf
@@ -110,6 +119,10 @@
                             <div class="form-group">
                                 <label for="title"><b>Category</b><span class="text-danger">*</span></label>
                                 <input type="text"  name="name" required placeholder="Category Name" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="title"><b>Image</b><span class="text-danger">*</span></label>
+                                <input type="file" name="image" class="form-control">
                             </div>
                         </div>
 

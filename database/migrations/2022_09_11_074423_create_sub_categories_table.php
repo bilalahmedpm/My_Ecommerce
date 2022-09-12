@@ -17,6 +17,7 @@ class CreateSubCategoriesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('category_id')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('status')->default(0);
             $table->timestamps();
         });

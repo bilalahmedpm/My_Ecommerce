@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -14,8 +15,16 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::where('status','=',0)->get();
+        $user = Auth::user();
+        if($user->role==1){
+            $category = Category::where('status','=',0)->get();
+        }
+        else
+        {
+            $category = Category::where('user_id','=',$user->id)->get();
+        }
        return view('admin.category.index',compact('category'));
+
     }
 
     /**
@@ -36,8 +45,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $category=  new Category();
         $category->name = $request->name;
+        $category->user_id = $user->id;
+        $category->status = 0;
+        if($request->hasfile('image')) {
+
+            $image1 = $request->file('image');
+            $name = time() . 'image' . '.' . $image1->getClientOriginalExtension();
+            $destinationPath = 'image/';
+            $image1->move($destinationPath, $name);
+            $category->img = 'image/' . $name;
+        }
         $category->save();
         return  redirect()->back()->with('message', 'Record Added Successfully !');
 
