@@ -21,4 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::resource('category','CategoryController');
+Route::get('/request/category','CategoryController@cat_request')->name('category.request');
+Route::get('/approve/category/{id}','CategoryController@cat_approve')->name('category.approve');
 Route::resource('subcategory','SubCategoryController');

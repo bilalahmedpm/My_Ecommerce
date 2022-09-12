@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,22 @@ class CategoryController extends Controller
         }
        return view('admin.category.index',compact('category'));
 
+    }
+    public function cat_request()
+    {
+        $user = Auth::user();
+        if ($user->role == 1)
+        {
+            $category = Category::where('status','=',1)->get();
+        }
+            return view('admin.category.index',compact('category'));
+    }
+    public function cat_approve($id)
+    {
+        $category = Category::find($id);
+        $category->status = 0;
+        $category->update();
+        return  redirect()->back()->with('message', 'Record Status Updated Successfully !');
     }
 
     /**
@@ -49,7 +66,14 @@ class CategoryController extends Controller
         $category=  new Category();
         $category->name = $request->name;
         $category->user_id = $user->id;
-        $category->status = 0;
+        if ($user->role == 1)
+        {
+            $category->status = 0;
+        }
+        else
+        {
+            $category->status = 1;
+        }
         if($request->hasfile('image')) {
 
             $image1 = $request->file('image');
