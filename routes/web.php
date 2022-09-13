@@ -20,7 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+// Category routes
 Route::resource('category','CategoryController');
 Route::get('/request/category','CategoryController@cat_request')->name('category.request');
 Route::get('/approve/category/{id}','CategoryController@cat_approve')->name('category.approve');
+//Sub Category Routes
 Route::resource('subcategory','SubCategoryController');
+Route::get('/request/sub_category','SubCategoryController@subcat_request')->name('subcategory.request');
+Route::get('/approve/subcategory/{id}','SubCategoryController@subcat_approve')->name('subcategory.approve');

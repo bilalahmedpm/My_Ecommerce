@@ -28,6 +28,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 @foreach($subcategory as $row)
                                     <tr>
                                         <td>{{$row->id}}</td>
@@ -42,52 +43,50 @@
                                         </td>
                                         <td>{{$row->user->name}}</td>
                                         <td>
-
-                                            <a href="{{route('category.edit' ,$row->id)}}" data-toggle="modal"
-                                               data-target="#categoryedit{{$row->id}}" class="btn btn-sm btn-primary"
+                                            @if($row->status == 1 || $user->role != 2)
+                                            <a href="{{route('subcategory.edit' ,$row->id)}}" data-toggle="modal"
+                                               data-target="#subcategoryedit{{$row->id}}" class="btn btn-sm btn-primary"
                                                data-toggle="tooltip" title="edit">
                                                 <i class="fa fa-pen"></i> Edit
                                             </a>
+
                                             <!-- Edit Modal -->
-                                            <div class="modal fade" id="categoryedit{{$row->id}}" tabindex="-1"
+                                            <div class="modal fade" id="subcategoryedit{{$row->id}}" tabindex="-1"
                                                  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Sub Category</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{route('category.update',$row->id)}}"
+                                                            <form action="{{route('subcategory.update',$row->id)}}"
                                                                   method="post" enctype="multipart/form-data"
                                                                   data-parsley-validate>
                                                                 @method('PUT')
                                                                 @csrf
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                        <label for="title"><b>Category</b><span
-                                                                                class="text-danger">*</span></label>
-                                                                        <input type="text" value="{{$row->name}}"
-                                                                               name="name" required
-                                                                               placeholder="Category Name"
-                                                                               class="form-control">
+                                                                        <label for="title"><b>Category</b><span class="text-danger">*</span></label>
+                                                                        <select name="category_id" id="" class="form-control" required>
+                                                                            @foreach($category as $list)
+                                                                                <option value="{{$list->id}}" {{ ( $list->id == $row->category_id) ? 'selected' : '' }} required>{{$list->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="title"><b>Image</b><span class="text-danger">*</span></label>
-                                                                        <input type="file" name="image" class="form-control">
+                                                                        <label for="title"><b> Sub Category Name</b><span class="text-danger">*</span></label>
+                                                                        <input type="text" name="subcategoryname" value="{{$row->name}}" required placeholder="Category Name"
+                                                                               class="form-control">
                                                                     </div>
-                                                                    <span style="font-weight: bold;"> Old Image</span><br>
-                                                                    <img src="{{asset($row->img)}}" alt="" width="80px" height="80px"><br>
                                                                 </div>
 
                                                                 <div class="col-md-12 pull-right">
                                                                     <div class="form-group">
-                                                                        <button type="submit"
-                                                                                class="btn btn-primary btn-block">Update
-                                                                        </button>
+                                                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                                                     </div>
                                                                 </div>
 
@@ -97,15 +96,22 @@
                                                 </div>
 
                                             </div>
+                                            @endif
                                             <!-- End of Edit Modal -->
 
                                             <!-- Delete section -->
-                                            <a href="{{route('category.destroy' ,$row->id)}}" id="delete"
+{{--                                                <form action="{{route('subcategory.destroy', $row->id)}}" method="POST">--}}
+{{--                                                    @method('DELETE')--}}
+{{--                                                    @csrf--}}
+{{--                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i>DELETE</button>--}}
+{{--                                                </form>--}}
+                                            <a href="{{route('subcategory.edit', $row->id)}}" id="delete"
                                                class="btn btn-sm btn-danger" data-toggle="tooltip" title="edit">
                                                 <i class="fa fa-times"></i> Delete
                                             </a>
+
                                             @if($row->status == 1 && $user->role == 1)
-                                                <a href="{{route('category.approve' , $row->id)}}" id="approve"
+                                                <a href="{{route('subcategory.approve' , $row->id)}}" id="approve"
                                                    class="btn btn-sm btn-warning" data-toggle="tooltip" title="edit">
                                                     <i class="fa fa-user"></i> Approve
                                                 </a>
@@ -141,7 +147,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <!-- Add New Category Modal -->
+                <!-- Add New Sub Category Modal -->
                 <div class="modal-body">
                     <form action="{{route('subcategory.store')}}" method="post" enctype="multipart/form-data"
                           data-parsley-validate>
@@ -151,8 +157,8 @@
                             <div class="form-group">
                                 <label for="title"><b>Category</b><span class="text-danger">*</span></label>
                                 <select name="category_id" id="" class="form-control" required>
-                                    @foreach($categories as $category)
-                                    <option value="{{$category->id}}" required>{{$category->name}}</option>
+                                    @foreach($category as $list)
+                                    <option value="{{$list->id}}" required>{{$list->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -175,6 +181,6 @@
 
         </div>
 
-    </div></div>
+    </div>
     <!-- End of new Category Modal -->
 @endsection

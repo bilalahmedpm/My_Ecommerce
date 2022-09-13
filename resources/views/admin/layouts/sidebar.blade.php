@@ -46,6 +46,9 @@
                             <a href="{{route('category.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Categories</p>
+{{--                                @if($user->role == 1)--}}
+{{--                                <span class="badge badge-warning float-right">{{$categories->count()}}</span>--}}
+{{--                                @endif--}}
                             </a>
                         </li>
                         @if($user->role == 1)
@@ -53,6 +56,7 @@
                             <a href="{{route('category.request')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Category Requests</p>
+{{--                                <span class="badge badge-warning float-right">{{$cat_request->count()}}</span>--}}
                             </a>
                         </li>
                         @endif
@@ -76,7 +80,7 @@
                         </li>
                         @if($user->role == 1)
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('subcategory.request')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sub Category Requests</p>
                             </a>

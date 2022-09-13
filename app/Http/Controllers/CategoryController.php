@@ -22,7 +22,11 @@ class CategoryController extends Controller
         } else {
             $category = Category::where('user_id', '=', $user->id)->get();
         }
+
         return view('admin.category.index', compact('category'));
+    }
+    public function count()
+    {
 
     }
 
@@ -42,6 +46,7 @@ class CategoryController extends Controller
         $category->update();
         return redirect()->back()->with('message', 'Record Status Updated Successfully !');
     }
+
 
     /**
      * Show the form for creating a new resource.

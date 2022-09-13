@@ -43,10 +43,10 @@
                                         </td>
                                         <td>{{$row->user->name}}</td>
                                         <td>
-
+                                            @if($row->status == 1 || $user->role != 2)
                                             <a href="{{route('category.edit' ,$row->id)}}" data-toggle="modal"
                                                data-target="#categoryedit{{$row->id}}" class="btn btn-sm btn-primary"
-                                               data-toggle="tooltip" title="edit">
+                                                title="edit">
                                                 <i class="fa fa-pen"></i> Edit
                                             </a>
                                             <!-- Edit Modal -->
@@ -98,6 +98,7 @@
                                                 </div>
 
                                             </div>
+                                            @endif
                                             <!-- End of Edit Modal -->
 
                                             <!-- Delete section -->
@@ -172,6 +173,6 @@
 
         </div>
 
-    </div></div>
+    </div>
     <!-- End of new Category Modal -->
 @endsection

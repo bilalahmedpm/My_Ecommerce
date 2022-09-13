@@ -18,16 +18,38 @@ class SubCategoryController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 1){
+            $category = Category::where('status', '=', 0)->get();
             $subcategory = sub_category::where('status' , '=' , 0)->get();
         }
         else
         {
-            $subcategory = sub_category::where('user_id','=', '$user->id' )->get();
+            $category = Category::where ('status' , '=' , 0)->get();
+            $subcategory = sub_category::where('user_id','=', $user->id )->get();
         }
 
-        $categories = Category::where('status', '=', 0)->get();
-
-        return view('admin.subcategory.index', compact('subcategory','categories'));
+        return view('admin.subcategory.index', compact('subcategory','category'));
+    }
+    public function subcat_request()
+    {
+        $user = Auth::user();
+        if ($user->role == 1)
+        {
+            $category = Category::where('status','=',0)->get();
+            $subcategory = sub_category::where('status', '=', 1 )->get();
+        }
+        else
+        {
+            $category = Category::where('status', '=', 0)->get();
+            $subcategory = sub_category::where('user_id','=', $user->id )->get();
+        }
+        return view('admin.subcategory.index', compact('category','subcategory'));
+    }
+    public function subcat_approve($id)
+    {
+        $category = sub_category::find($id);
+        $category->status = 0;
+        $category->save();
+        return redirect()->back()->with('message', 'Record Status Updated Successfully !');
     }
 
     /**
@@ -82,9 +104,11 @@ class SubCategoryController extends Controller
      * @param  \App\sub_category  $sub_category
      * @return \Illuminate\Http\Response
      */
-    public function edit(sub_category $sub_category)
+    public function edit($id)
     {
-        //
+        $subcategory = sub_category::find($id);
+        $subcategory->DELETE();
+        return redirect()->back()->with('error', 'Record Delete Successfully !');
     }
 
     /**
@@ -94,9 +118,13 @@ class SubCategoryController extends Controller
      * @param  \App\sub_category  $sub_category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, sub_category $sub_category)
+    public function update(Request $request, $id)
     {
-        //
+        $subcategory = sub_category::find($id);
+        $subcategory->name  = $request->subcategoryname;
+        $subcategory->category_id  = $request->category_id;
+        $subcategory->save();
+        return redirect()->back()->with('message', 'Record Updated Successfully !');
     }
 
     /**
@@ -105,8 +133,8 @@ class SubCategoryController extends Controller
      * @param  \App\sub_category  $sub_category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(sub_category $sub_category)
+    public function destroy($id)
     {
-        //
+
     }
 }
