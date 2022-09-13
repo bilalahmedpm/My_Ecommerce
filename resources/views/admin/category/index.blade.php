@@ -49,20 +49,18 @@
                                                data-toggle="tooltip" title="edit">
                                                 <i class="fa fa-pen"></i> Edit
                                             </a>
-                                            <!-- Modal -->
+                                            <!-- Edit Modal -->
                                             <div class="modal fade" id="categoryedit{{$row->id}}" tabindex="-1"
                                                  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Update
-                                                                Category</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-
                                                         <div class="modal-body">
                                                             <form action="{{route('category.update',$row->id)}}"
                                                                   method="post" enctype="multipart/form-data"
@@ -78,6 +76,12 @@
                                                                                placeholder="Category Name"
                                                                                class="form-control">
                                                                     </div>
+                                                                    <div class="form-group">
+                                                                        <label for="title"><b>Image</b><span class="text-danger">*</span></label>
+                                                                        <input type="file" name="image" class="form-control">
+                                                                    </div>
+                                                                    <span style="font-weight: bold;"> Old Image</span><br>
+                                                                    <img src="{{asset($row->img)}}" alt="" width="80px" height="80px"><br>
                                                                 </div>
 
                                                                 <div class="col-md-12 pull-right">
@@ -94,7 +98,9 @@
                                                 </div>
 
                                             </div>
+                                            <!-- End of Edit Modal -->
 
+                                            <!-- Delete section -->
                                             <a href="{{route('category.destroy' ,$row->id)}}" id="delete"
                                                class="btn btn-sm btn-danger" data-toggle="tooltip" title="edit">
                                                 <i class="fa fa-times"></i> Delete
@@ -105,6 +111,7 @@
                                                     <i class="fa fa-user"></i> Approve
                                                 </a>
                                             @endif
+                                            <!-- End of delete -->
                                         </td>
 
                                     </tr>
@@ -124,7 +131,7 @@
     </section>
     <!-- /.content -->
 
-    <!-- Modal -->
+    <!-- Add new Category Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -166,5 +173,5 @@
         </div>
 
     </div></div>
-
+    <!-- End of new Category Modal -->
 @endsection

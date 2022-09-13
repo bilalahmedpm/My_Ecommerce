@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\sub_category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SubCategoryController extends Controller
 {
@@ -14,7 +16,18 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        if ($user->role == 1){
+            $subcategory = sub_category::where('status' , '=' , 0)->get();
+        }
+        else
+        {
+            $subcategory = sub_category::where('user_id','=', '$user->id' )->get();
+        }
+
+        $categories = Category::where('status', '=', 0)->get();
+
+        return view('admin.subcategory.index', compact('subcategory','categories'));
     }
 
     /**
@@ -35,7 +48,21 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $subcategory = new sub_category();
+        $subcategory->name  = $request->subcategoryname;
+        $subcategory->category_id  = $request->category_id;
+        if ($user->role == 1)
+        {
+            $subcategory->status = 0;
+        }
+        else
+        {
+            $subcategory->status = 1;
+        }
+        $subcategory->user_id = $user->id;
+        $subcategory->save();
+        return redirect()->back()->with('message', 'Record Added Successfully !');
     }
 
     /**

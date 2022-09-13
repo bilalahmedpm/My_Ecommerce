@@ -17,31 +17,30 @@ class CategoryController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->role==1){
-            $category = Category::where('status','=',0)->get();
+        if ($user->role == 1) {
+            $category = Category::where('status', '=', 0)->get();
+        } else {
+            $category = Category::where('user_id', '=', $user->id)->get();
         }
-        else
-        {
-            $category = Category::where('user_id','=',$user->id)->get();
-        }
-       return view('admin.category.index',compact('category'));
+        return view('admin.category.index', compact('category'));
 
     }
+
     public function cat_request()
     {
         $user = Auth::user();
-        if ($user->role == 1)
-        {
-            $category = Category::where('status','=',1)->get();
+        if ($user->role == 1) {
+            $category = Category::where('status', '=', 1)->get();
         }
-            return view('admin.category.index',compact('category'));
+        return view('admin.category.index', compact('category'));
     }
+
     public function cat_approve($id)
     {
         $category = Category::find($id);
         $category->status = 0;
         $category->update();
-        return  redirect()->back()->with('message', 'Record Status Updated Successfully !');
+        return redirect()->back()->with('message', 'Record Status Updated Successfully !');
     }
 
     /**
@@ -57,24 +56,21 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $user = Auth::user();
-        $category=  new Category();
+        $category = new Category();
         $category->name = $request->name;
         $category->user_id = $user->id;
-        if ($user->role == 1)
-        {
+        if ($user->role == 1) {
             $category->status = 0;
-        }
-        else
-        {
+        } else {
             $category->status = 1;
         }
-        if($request->hasfile('image')) {
+        if ($request->hasfile('image')) {
 
             $image1 = $request->file('image');
             $name = time() . 'image' . '.' . $image1->getClientOriginalExtension();
@@ -83,7 +79,7 @@ class CategoryController extends Controller
             $category->img = 'image/' . $name;
         }
         $category->save();
-        return  redirect()->back()->with('message', 'Record Added Successfully !');
+        return redirect()->back()->with('message', 'Record Added Successfully !');
 
 
     }
@@ -91,7 +87,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Http\Response
      */
 
@@ -105,7 +101,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -116,22 +112,31 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Category $category
      * @return \Illuminate\Http\Response
      */
 
     public function update(Request $request, $id)
-    {   $category = Category::find($id);
+    {
+        $category = Category::find($id);
         $category->name = $request->name;
+        if ($request->hasfile('image')) {
+
+            $image1 = $request->file('image');
+            $name = time() . 'image' . '.' . $image1->getClientOriginalExtension();
+            $destinationPath = 'image/';
+            $image1->move($destinationPath, $name);
+            $category->img = 'image/' . $name;
+        }
         $category->update();
-        return  redirect()->back()->with('message', 'Record Updated Successfully !');
+        return redirect()->back()->with('message', 'Record Updated Successfully !');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param \App\Category $category
      * @return \Illuminate\Http\Response
      */
 
