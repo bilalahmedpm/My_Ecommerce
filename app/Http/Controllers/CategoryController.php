@@ -25,11 +25,6 @@ class CategoryController extends Controller
 
         return view('admin.category.index', compact('category'));
     }
-    public function count()
-    {
-
-    }
-
     public function cat_request()
     {
         $user = Auth::user();

@@ -3,6 +3,7 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
+        <?php $user = \Illuminate\Support\Facades\Auth::user(); ?>
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
@@ -10,9 +11,10 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
 
-                            <p>New Orders</p>
+                            <h3>{{$categories}}</h3>
+
+                            <p>Categories</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -21,13 +23,18 @@
                     </div>
                 </div>
                 <!-- ./col -->
+
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
+                            @if($user->role ==1)
+                            <h3>{{$category_requests}}</h3>
+                            <p>Category Requests</p>
+                            @else
+                            <h3>{{$pending_categories}}</h3>
+                            <p>Pending Categories</p>
+                            @endif
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -40,9 +47,10 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
 
-                            <p>User Registrations</p>
+                            <h3>{{$subcategories}}</h3>
+
+                            <p>Sub Categories</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -51,13 +59,18 @@
                     </div>
                 </div>
                 <!-- ./col -->
+
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
+                            @if($user->role==1)
+                            <h3>{{$subcategory_requests}}</h3>
+                            <p>SubCategory Requests</p>
+                            @else
+                                <h3>{{$pending_subcategories}}</h3>
+                                <p>Pending Sub_Categories</p>
+                            @endif
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
@@ -65,6 +78,7 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+
                 <!-- ./col -->
             </div>
             <!-- /.row -->

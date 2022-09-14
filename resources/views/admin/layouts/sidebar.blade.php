@@ -3,7 +3,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
     <!-- Sidebar -->
@@ -19,7 +20,7 @@
         </div>
         <?php $user = Auth::User(); ?>
 
-        <!-- Sidebar Menu -->
+            <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
@@ -46,19 +47,19 @@
                             <a href="{{route('category.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Categories</p>
-{{--                                @if($user->role == 1)--}}
-{{--                                <span class="badge badge-warning float-right">{{$categories->count()}}</span>--}}
-{{--                                @endif--}}
+                                {{--                                @if($user->role == 1)--}}
+                                {{--                                <span class="badge badge-warning float-right">{{$categories->count()}}</span>--}}
+                                {{--                                @endif--}}
                             </a>
                         </li>
                         @if($user->role == 1)
-                        <li class="nav-item">
-                            <a href="{{route('category.request')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Category Requests</p>
-{{--                                <span class="badge badge-warning float-right">{{$cat_request->count()}}</span>--}}
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{route('category.request')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Category Requests</p>
+                                    {{--                                <span class="badge badge-warning float-right">{{$cat_request->count()}}</span>--}}
+                                </a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -79,12 +80,12 @@
                             </a>
                         </li>
                         @if($user->role == 1)
-                        <li class="nav-item">
-                            <a href="{{route('subcategory.request')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sub Category Requests</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{route('subcategory.request')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sub Category Requests</p>
+                                </a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -93,7 +94,7 @@
                     <a href="{{ route('logout') }}" class="nav-link"
                        onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
-                        <i class="nav-icon fas fa-sign-out-alt" ></i>
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout
                         </p>
