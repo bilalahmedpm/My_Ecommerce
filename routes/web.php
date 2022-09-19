@@ -31,3 +31,5 @@ Route::get('/approve/category/{id}','CategoryController@cat_approve')->name('cat
 Route::resource('subcategory','SubCategoryController');
 Route::get('/request/sub_category','SubCategoryController@subcat_request')->name('subcategory.request');
 Route::get('/approve/subcategory/{id}','SubCategoryController@subcat_approve')->name('subcategory.approve');
+// Product Routes
+Route::resource('product','ProductController');
