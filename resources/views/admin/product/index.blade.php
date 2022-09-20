@@ -17,7 +17,8 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
                                     <th>Image</th>
                                     <th>Status</th>
                                     <th>Created By</th>
@@ -31,7 +32,8 @@
                                         <td>{{$row->title}}</td>
                                         <td>{{$row->description}}</td>
                                         <td><img style="width:60px; height: 50px; border-radius:20px; "
-                                                 src="{{asset($row->img1)}}" alt=""></td>
+                                                 src="{{asset($row->img1)}}" alt="">
+                                        </td>
                                         <td>
                                             @if($row->status == 0)
                                                 <span class="badge badge-success">Active</span>

@@ -33,7 +33,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Sub Category</label>
-                                    <select  name="subcategory_id"  class="form-control maincategory" required>
+                                    <select  name="subcategory_id"  class="form-control subcategory" required>
 
                                     </select>
                                 </div>
@@ -126,7 +126,28 @@
                 </form>
                 <!-- /.card -->
         </div><!-- /.container-fluid -->
+        </div>
     </section>
     <!-- /.content -->
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $('.category').on('change' , function (){
+            $('.subcategory').html('<option value="">Select One SubCategory</option>');
+            $.ajax({
+                type: 'POST',
+                url: '{{route('fetchsubcat')}}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: this.value,
+                },
+                success: function (response) {
+                    $.each(response, function(i, item) {
+                        $('.subcategory').append('<option value="'+item.id+'">'+item.name+'</option>');
+                    });
+
+                }
+            });
+        });
+        // });
+    </script>
 @endsection

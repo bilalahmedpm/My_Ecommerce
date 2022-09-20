@@ -33,3 +33,4 @@ Route::get('/request/sub_category','SubCategoryController@subcat_request')->name
 Route::get('/approve/subcategory/{id}','SubCategoryController@subcat_approve')->name('subcategory.approve');
 // Product Routes
 Route::resource('product','ProductController');
+Route::post('/fetchsubcategories','ProductController@fetchsubcategories')->name('fetchsubcat');
